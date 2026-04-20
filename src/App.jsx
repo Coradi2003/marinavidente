@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import './index.css';
 
 const Header = () => {
+  const instagramUrl = "https://instagram.com/marina_vidente_";
+  
   return (
     <header className="glass container" style={{ 
       position: 'fixed', top: '2rem', left: '50%', transform: 'translateX(-50%)',
@@ -11,13 +13,24 @@ const Header = () => {
       <div style={{ fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '2px' }}>
         MARINA <span className="text-gradient">ESPAÇO LUZ</span>
       </div>
-      <nav className="desktop-nav">
+      <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
         <ul style={{ display: 'flex', gap: '2.5rem', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
           <li><a href="#services" className="hover-gold">Serviços</a></li>
           <li><a href="#about" className="hover-gold">Marina</a></li>
           <li><a href="#gallery" className="hover-gold">Galeria</a></li>
           <li><a href="#contact" className="hover-gold">Contato</a></li>
         </ul>
+        {/* Instagram Icon */}
+        <a 
+          href={instagramUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="hover-gold"
+          style={{ display: 'flex', alignItems: 'center', color: 'var(--accent-gold)' }}
+          title={instagramUrl}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
       </nav>
       <a href="https://wa.me/5548991912929" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.8rem' }}>Agendar</a>
     </header>
