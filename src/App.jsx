@@ -156,7 +156,10 @@ const About = () => (
           <div style={{ position: 'absolute', top: '30px', left: '-20px', width: '100%', height: '100%', border: '1px solid rgba(212, 175, 55, 0.3)', borderRadius: '30px', zIndex: -1 }}></div>
         </div>
         <div>
-          <span className="section-tag">O Dom Revelado</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1.5rem' }}>
+            <img src="/images/logomarina.jpeg" alt="Marina" style={{ width: '80px', height: '80px', borderRadius: '50%', border: '2px solid var(--accent-gold)', objectFit: 'cover', boxShadow: '0 0 20px var(--accent-gold-glow)' }} />
+            <span className="section-tag" style={{ marginBottom: 0 }}>O Dom Revelado</span>
+          </div>
           <h2 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', marginBottom: '2rem' }}>Marina <span className="text-gradient">Vidente</span></h2>
           <div style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: '1.9' }}>
             <p style={{ marginBottom: '1.5rem' }}>Sensitiva por natureza e Cigana por alma, Marina é o canal entre o mundo espiritual e sua realidade física.</p>
