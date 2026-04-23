@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './index.css';
 
 const Header = () => {
@@ -147,7 +147,7 @@ const Hero = () => {
       <div style={{ 
         position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
         backgroundImage: 'url("/images/mystic_altar.png")', backgroundSize: 'cover',
-        backgroundPosition: 'center', opacity: 0.25, zIndex: 0
+        backgroundPosition: 'center', opacity: 0.15, zIndex: 0
       }}></div>
 
       {/* Mystic particle canvas */}
@@ -163,21 +163,64 @@ const Hero = () => {
         pointerEvents: 'none'
       }} />
       
-      <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', animation: 'fadeIn 1.5s ease-out' }}>
-        <span className="section-tag" style={{ fontSize: 'clamp(0.6rem, 2vw, 0.85rem)' }}>25 Anos de Sabedoria Espiritual</span>
-        <h1 style={{ fontSize: 'clamp(2.5rem, 10vw, 5.5rem)', lineHeight: '1.1', marginBottom: '1.5rem', fontWeight: '700' }}>
-          O Destino <br /><span className="text-gradient">Em Suas Mãos</span>
-        </h1>
-        <p style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)', maxWidth: '800px', margin: '0 auto 3rem', color: 'rgba(255,255,255,0.7)', fontWeight: '300' }}>
-          Pelos oráculos sagrados e Alta Magia, Marina Vidente desvenda o futuro e restaura seu equilíbrio.
-        </p>
-        <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
-          <a href="https://wa.me/5548991912929" className="btn-primary" style={{ padding: '1rem 2rem' }}>
-            Consultar Oráculos
-          </a>
-          <div style={{ textAlign: 'left', borderLeft: '1px solid var(--accent-gold)', paddingLeft: '1.5rem' }}>
-            <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.2rem' }}>R$ 200</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sessão Privada</div>
+      <div className="container" style={{ position: 'relative', zIndex: 2, animation: 'fadeIn 1.5s ease-out' }}>
+        <div className="hero-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr auto',
+          gap: '4rem',
+          alignItems: 'center',
+        }}>
+          {/* Left: Text content */}
+          <div>
+            <span className="section-tag" style={{ fontSize: 'clamp(0.6rem, 2vw, 0.85rem)' }}>25 Anos de Sabedoria Espiritual</span>
+            <h1 style={{ fontSize: 'clamp(2.2rem, 7vw, 5rem)', lineHeight: '1.1', marginBottom: '1.5rem', fontWeight: '700' }}>
+              O Destino <br /><span className="text-gradient">Em Suas Mãos</span>
+            </h1>
+            <p style={{ fontSize: 'clamp(0.95rem, 2vw, 1.2rem)', maxWidth: '520px', marginBottom: '3rem', color: 'rgba(255,255,255,0.7)', fontWeight: '300', lineHeight: '1.8' }}>
+              Pelos oráculos sagrados e Alta Magia, Marina Vidente desvenda o futuro e restaura seu equilíbrio.
+            </p>
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <a href="https://wa.me/5548991912929" className="btn-primary" style={{ padding: '1rem 2rem' }}>
+                Consultar Oráculos
+              </a>
+              <div style={{ textAlign: 'left', borderLeft: '1px solid var(--accent-gold)', paddingLeft: '1.5rem' }}>
+                <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.2rem' }}>R$ 200</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sessão Privada</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: YouTube Short */}
+          <div className="hero-video-wrapper" style={{ position: 'relative', flexShrink: 0 }}>
+            {/* Decorative gold frame behind */}
+            <div style={{
+              position: 'absolute', top: '20px', left: '-16px',
+              width: '100%', height: '100%',
+              border: '1px solid rgba(212,175,55,0.35)',
+              borderRadius: '24px', zIndex: 0
+            }} />
+            {/* Purple glow behind video */}
+            <div style={{
+              position: 'absolute', inset: '-20px',
+              background: 'radial-gradient(ellipse, rgba(120,40,200,0.3) 0%, transparent 70%)',
+              zIndex: 0, borderRadius: '40px'
+            }} />
+            <div style={{
+              position: 'relative', zIndex: 1,
+              width: '260px', height: '462px',
+              borderRadius: '20px', overflow: 'hidden',
+              boxShadow: '0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(120,40,200,0.25)',
+              border: '1px solid rgba(212,175,55,0.2)',
+            }}>
+              <iframe
+                src="https://www.youtube.com/embed/xi537wChQSc?autoplay=1&mute=1&loop=1&playlist=xi537wChQSc&controls=0&rel=0&modestbranding=1&playsinline=1"
+                title="Marina Vidente"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -346,6 +389,95 @@ const WhatsAppButton = () => (
   </a>
 );
 
+const GlobalParticles = () => {
+  const canvasRef = useRef(null);
+  const animRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.documentElement.scrollHeight;
+    };
+    resize();
+
+    // Re-measure height after fonts/images load (lazy resize)
+    const delayedResize = () => setTimeout(resize, 500);
+    window.addEventListener('resize', delayedResize);
+
+    const PARTICLE_COUNT = 140;
+    const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.2 + 0.4,
+      speedY: -(Math.random() * 0.5 + 0.15),
+      speedX: (Math.random() - 0.5) * 0.25,
+      alpha: Math.random() * 0.55 + 0.15,
+      alphaDir: Math.random() > 0.5 ? 0.004 : -0.004,
+      hue: Math.floor(Math.random() * 60 + 260),
+      angle: Math.random() * Math.PI * 2,
+      angleSpeed: (Math.random() - 0.5) * 0.009,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+        glow.addColorStop(0, `hsla(${p.hue}, 90%, 75%, ${p.alpha})`);
+        glow.addColorStop(1, `hsla(${p.hue}, 90%, 55%, 0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 88%, ${Math.min(p.alpha + 0.3, 1)})`;
+        ctx.fill();
+
+        p.x += p.speedX + Math.sin(p.angle) * 0.12;
+        p.y += p.speedY;
+        p.angle += p.angleSpeed;
+        p.alpha += p.alphaDir;
+        if (p.alpha >= 0.8 || p.alpha <= 0.1) p.alphaDir *= -1;
+
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+      }
+
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', delayedResize);
+      cancelAnimationFrame(animRef.current);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 0,
+        pointerEvents: 'none',
+      }}
+    />
+  );
+};
+
+
 function App() {
   useEffect(() => {
     const observerOptions = { threshold: 0.1 };
@@ -368,6 +500,7 @@ function App() {
   return (
     <>
       <Header />
+      <GlobalParticles />
       <main>
         <Hero />
         <Features />

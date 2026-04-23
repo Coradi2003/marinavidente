@@ -194,3 +194,23 @@ section {
     display: none !important;
   }
 }
+
+/* Hero grid responsive */
+.hero-grid {
+  grid-template-columns: 1fr auto !important;
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    justify-items: center;
+  }
+  .hero-video-wrapper {
+    width: 220px !important;
+  }
+  .hero-video-wrapper > div:last-child {
+    width: 220px !important;
+    height: 391px !important;
+  }
+}
