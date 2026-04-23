@@ -327,20 +327,21 @@ const Gallery = () => (
 const Testimonials = () => (
   <section id="testimonials" style={{ padding: '8rem 0' }}>
     <div className="container">
-      <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
         <h2 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}>Vozes de <span className="text-gradient">Luz</span></h2>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-        {[
-          { text: "Consegui ter ela de volta em meu lar. Gratidão eterna.", author: "R. Silva" },
-          { text: "Meu marido passou a me procurar dias depois. Hoje somos felizes.", author: "M. Oliveira" },
-          { text: "Obrigada por me ajudar a reconquistar meu amor com magia cigana.", author: "P. Santos" }
-        ].map((t, i) => (
-          <div key={i} className="glass" style={{ padding: '2.5rem' }}>
-            <p style={{ marginBottom: '2rem', fontSize: '1.1rem', fontStyle: 'italic' }}>"{t.text}"</p>
-            <div style={{ fontWeight: '700', fontSize: '0.85rem', color: 'var(--accent-gold)', letterSpacing: '1px' }}>{t.author}</div>
-          </div>
-        ))}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="glass" style={{
+          borderRadius: '24px', overflow: 'hidden',
+          maxWidth: '700px', width: '100%',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.1)',
+        }}>
+          <img
+            src="/images/print.jpeg"
+            alt="Depoimentos de clientes"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
       </div>
     </div>
   </section>
