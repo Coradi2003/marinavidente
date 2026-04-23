@@ -213,9 +213,9 @@ const Hero = () => {
               border: '1px solid rgba(212,175,55,0.2)',
             }}>
               <iframe
-                src="https://www.youtube.com/embed/xi537wChQSc?autoplay=1&mute=1&loop=1&playlist=xi537wChQSc&controls=0&rel=0&modestbranding=1&playsinline=1"
+                src="https://www.youtube.com/embed/xi537wChQSc?controls=0&rel=0&modestbranding=1&playsinline=1"
                 title="Marina Vidente"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                allow="encrypted-media; picture-in-picture"
                 allowFullScreen
                 loading="lazy"
                 style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
