@@ -151,15 +151,12 @@ const About = () => (
       <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem', alignItems: 'center' }}>
         <div style={{ position: 'relative' }}>
           <div className="glass" style={{ width: '100%', height: 'clamp(400px, 60vh, 600px)', overflow: 'hidden', borderRadius: '30px' }}>
-            <img src="/images/gypsy_tarot.png" alt="Marina Vidente" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src="/images/logomarina.jpeg" alt="Marina Vidente" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <div style={{ position: 'absolute', top: '30px', left: '-20px', width: '100%', height: '100%', border: '1px solid rgba(212, 175, 55, 0.3)', borderRadius: '30px', zIndex: -1 }}></div>
         </div>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1.5rem' }}>
-            <img src="/images/logomarina.jpeg" alt="Marina" style={{ width: '80px', height: '80px', borderRadius: '50%', border: '2px solid var(--accent-gold)', objectFit: 'cover', boxShadow: '0 0 20px var(--accent-gold-glow)' }} />
-            <span className="section-tag" style={{ marginBottom: 0 }}>O Dom Revelado</span>
-          </div>
+          <span className="section-tag">O Dom Revelado</span>
           <h2 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', marginBottom: '2rem' }}>Marina <span className="text-gradient">Vidente</span></h2>
           <div style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: '1.9' }}>
             <p style={{ marginBottom: '1.5rem' }}>Sensitiva por natureza e Cigana por alma, Marina é o canal entre o mundo espiritual e sua realidade física.</p>
