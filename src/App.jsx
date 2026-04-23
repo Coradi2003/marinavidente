@@ -177,10 +177,11 @@ const Gallery = () => (
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
         {[
-          "/images/gypsy_tarot.png",
-          "/images/mystic_altar.png",
-          "/images/crystal_ball.png",
-          "/images/mystic_altar.png"
+          "/images/WhatsApp Image 2026-04-23 at 15.26.11.jpeg",
+          "/images/WhatsApp Image 2026-04-23 at 15.26.29.jpeg",
+          "/images/WhatsApp Image 2026-04-23 at 15.27.19.jpeg",
+          "/images/WhatsApp Image 2026-04-23 at 15.28.20.jpeg",
+          "/images/WhatsApp Image 2026-04-23 at 15.29.49.jpeg"
         ].map((img, i) => (
           <div key={i} className="glass" style={{ height: '300px', overflow: 'hidden' }}>
              <img src={img} alt="Mística" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
