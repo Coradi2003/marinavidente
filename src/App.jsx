@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import './index.css';
 
 const Header = () => {
@@ -64,37 +64,126 @@ const Header = () => {
   );
 };
 
-const Hero = () => (
-  <section style={{ 
-    minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-    position: 'relative', overflow: 'hidden', background: '#050406', padding: '6rem 0'
-  }}>
-    <div style={{ 
-      position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-      backgroundImage: 'url("/images/mystic_altar.png")', backgroundSize: 'cover',
-      backgroundPosition: 'center', opacity: 0.25, zIndex: 0
-    }}></div>
-    
-    <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', animation: 'fadeIn 1.5s ease-out' }}>
-      <span className="section-tag" style={{ fontSize: 'clamp(0.6rem, 2vw, 0.85rem)' }}>25 Anos de Sabedoria Espiritual</span>
-      <h1 style={{ fontSize: 'clamp(2.5rem, 10vw, 5.5rem)', lineHeight: '1.1', marginBottom: '1.5rem', fontWeight: '700' }}>
-        O Destino <br /><span className="text-gradient">Em Suas Mãos</span>
-      </h1>
-      <p style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)', maxWidth: '800px', margin: '0 auto 3rem', color: 'rgba(255,255,255,0.7)', fontWeight: '300' }}>
-        Pelos oráculos sagrados e Alta Magia, Marina Vidente desvenda o futuro e restaura seu equilíbrio.
-      </p>
-      <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
-        <a href="https://wa.me/5548991912929" className="btn-primary" style={{ padding: '1rem 2rem' }}>
-          Consultar Oráculos
-        </a>
-        <div style={{ textAlign: 'left', borderLeft: '1px solid var(--accent-gold)', paddingLeft: '1.5rem' }}>
-          <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.2rem' }}>R$ 200</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sessão Privada</div>
+const Hero = () => {
+  const canvasRef = useRef(null);
+  const animRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const PARTICLE_COUNT = 80;
+    const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.5 + 0.5,
+      speedY: -(Math.random() * 0.6 + 0.2),
+      speedX: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.6 + 0.2,
+      alphaDir: Math.random() > 0.5 ? 0.005 : -0.005,
+      hue: Math.floor(Math.random() * 60 + 260), // 260–320: purple to magenta
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      angle: Math.random() * Math.PI * 2,
+      angleSpeed: (Math.random() - 0.5) * 0.01,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        // Pulsing glow
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+        glow.addColorStop(0, `hsla(${p.hue}, 90%, 75%, ${p.alpha})`);
+        glow.addColorStop(1, `hsla(${p.hue}, 90%, 55%, 0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 85%, ${Math.min(p.alpha + 0.3, 1)})`;
+        ctx.fill();
+
+        // Move
+        p.x += p.speedX + Math.sin(p.angle) * 0.15;
+        p.y += p.speedY;
+        p.angle += p.angleSpeed;
+        p.alpha += p.alphaDir;
+        if (p.alpha >= 0.85 || p.alpha <= 0.1) p.alphaDir *= -1;
+
+        // Wrap around
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+      }
+
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animRef.current);
+    };
+  }, []);
+
+  return (
+    <section style={{ 
+      minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      position: 'relative', overflow: 'hidden', background: '#050406', padding: '6rem 0'
+    }}>
+      {/* Background image */}
+      <div style={{ 
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+        backgroundImage: 'url("/images/mystic_altar.png")', backgroundSize: 'cover',
+        backgroundPosition: 'center', opacity: 0.25, zIndex: 0
+      }}></div>
+
+      {/* Mystic particle canvas */}
+      <canvas ref={canvasRef} style={{
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+        zIndex: 1, pointerEvents: 'none'
+      }} />
+
+      {/* Radial purple glow overlay */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1,
+        background: 'radial-gradient(ellipse at 50% 60%, rgba(120,40,200,0.18) 0%, transparent 70%)',
+        pointerEvents: 'none'
+      }} />
+      
+      <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', animation: 'fadeIn 1.5s ease-out' }}>
+        <span className="section-tag" style={{ fontSize: 'clamp(0.6rem, 2vw, 0.85rem)' }}>25 Anos de Sabedoria Espiritual</span>
+        <h1 style={{ fontSize: 'clamp(2.5rem, 10vw, 5.5rem)', lineHeight: '1.1', marginBottom: '1.5rem', fontWeight: '700' }}>
+          O Destino <br /><span className="text-gradient">Em Suas Mãos</span>
+        </h1>
+        <p style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)', maxWidth: '800px', margin: '0 auto 3rem', color: 'rgba(255,255,255,0.7)', fontWeight: '300' }}>
+          Pelos oráculos sagrados e Alta Magia, Marina Vidente desvenda o futuro e restaura seu equilíbrio.
+        </p>
+        <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+          <a href="https://wa.me/5548991912929" className="btn-primary" style={{ padding: '1rem 2rem' }}>
+            Consultar Oráculos
+          </a>
+          <div style={{ textAlign: 'left', borderLeft: '1px solid var(--accent-gold)', paddingLeft: '1.5rem' }}>
+            <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.2rem' }}>R$ 200</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sessão Privada</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Features = () => (
   <section style={{ padding: '4rem 0', background: '#0e0c12', borderY: '1px solid rgba(212, 175, 55, 0.1)' }}>
