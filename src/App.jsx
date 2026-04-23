@@ -333,7 +333,7 @@ const Testimonials = () => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div className="glass" style={{
           borderRadius: '24px', overflow: 'hidden',
-          maxWidth: '700px', width: '100%',
+          maxWidth: '380px', width: '100%',
           boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.1)',
         }}>
           <img
