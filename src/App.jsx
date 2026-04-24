@@ -44,7 +44,10 @@ const Header = () => {
           )}
         </button>
 
-        <a href="https://wa.me/5548991912929" className="btn-primary header-btn" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Agendar</a>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <a href="#location" className="btn-outline header-btn" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Ver Localização</a>
+          <a href="https://wa.me/5548991912929" className="btn-primary header-btn" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Agendar</a>
+        </div>
       </header>
 
       {/* Mobile Menu Drawer */}
@@ -55,7 +58,8 @@ const Header = () => {
           <a href="#gallery" onClick={() => setIsMenuOpen(false)}>Galeria</a>
           <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contato</a>
           <a href={instagramUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: '1.2rem', marginTop: '2rem' }}>Ver Instagram →</a>
-          <div style={{ marginTop: 'auto', textAlign: 'center' }}>
+          <div style={{ marginTop: 'auto', textAlign: 'center', display: 'grid', gap: '1rem' }}>
+            <a href="#location" onClick={() => setIsMenuOpen(false)} className="btn-outline" style={{ fontSize: '1rem', width: '100%', display: 'block' }}>Ver Localização</a>
             <a href="https://wa.me/5548991912929" className="btn-primary" style={{ fontSize: '1rem', width: '100%', display: 'block' }}>Falar com Marina</a>
           </div>
         </div>
@@ -347,6 +351,35 @@ const Testimonials = () => (
   </section>
 );
 
+const MapSection = () => (
+  <section id="location" style={{ padding: '8rem 0', background: '#0e0c12' }}>
+    <div className="container">
+      <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+        <span className="section-tag">Onde Nos Encontrar</span>
+        <h2 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', marginBottom: '1.5rem' }}>Nossa <span className="text-gradient">Localização</span></h2>
+      </div>
+      <div className="glass" style={{ 
+        width: '100%', 
+        height: '450px', 
+        overflow: 'hidden', 
+        position: 'relative',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+        border: '1px solid rgba(212, 175, 55, 0.2)'
+      }}>
+        <iframe 
+          title="Google Maps"
+          width="100%" 
+          height="100%" 
+          style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
+          loading="lazy" 
+          allowFullScreen 
+          src="https://maps.google.com/maps?q=Rua%20252%2C%20425%20-%20Meia%20Praia%2C%20Itapema%20-%20SC%2C%2088220-000&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+);
+
 const Footer = () => (
   <footer id="contact" style={{ padding: '8rem 0 3rem', background: '#020202' }}>
     <div className="container">
@@ -357,7 +390,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 style={{ color: '#fff', marginBottom: '1.5rem', fontSize: '1.1rem' }}>Localização</h4>
-          <p style={{ color: 'var(--text-muted)' }}>Itapema - SC, 88220-000<br />Brasil</p>
+          <p style={{ color: 'var(--text-muted)' }}>Rua 252, nº 425 - Meia Praia<br />Itapema - SC, 88220-000</p>
         </div>
         <div>
           <h4 style={{ color: '#fff', marginBottom: '1.5rem', fontSize: '1.1rem' }}>Contato</h4>
@@ -509,6 +542,7 @@ function App() {
         <About />
         <Gallery />
         <Testimonials />
+        <MapSection />
       </main>
       <Footer />
       <WhatsAppButton />
